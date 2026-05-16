@@ -1,8 +1,10 @@
+import logging
 import asyncio
 from playwright.async_api import async_playwright
 
 class Extension1:
     def __init__(self, browser=None):
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.browser = browser
         self.url = 'https://the-internet.herokuapp.com/abtest'
 
@@ -18,14 +20,13 @@ class Extension1:
             await header.wait_for()
 
             header_text = await header.inner_text()
-        self._confirm_result(url=self.url, text=header_text)
+        self._confirm_result(text=header_text)
         await asyncio.sleep(5)
-        print(f'{self.__class__.__name__} is done...\n')
+        self.logger.info(f'{self.__class__.__name__} is done...\n')
 
-    @staticmethod
-    def _confirm_result(url='', text=''):
+    def _confirm_result(self, text=''):
         header_text_list = ['A/B Test Variation 1', 'A/B Test Control']
         if text in header_text_list:
-            print(f'Current header is "{text}" in "{url}"...')
+            self.logger.info(f'Current header is "{text}" in "{self.url}"...')
         else:
-            print(f'"{text}" not found in records...')
+            self.logger.warning(f'"{text}" not found in records...')
