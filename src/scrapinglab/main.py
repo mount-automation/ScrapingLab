@@ -34,8 +34,8 @@ async def main_init() -> None:
             # SplitTesting(browser=browser),
             # AddRemoveElements(browser=browser),
             # BasicAuth(browser=browser),
-            BrokenImages(browser=browser),
-            # ChallengingDOM(browser=browser),
+            # BrokenImages(browser=browser),
+            ChallengingDOM(browser=browser),
         ]
         try:
             tg: TaskGroup
