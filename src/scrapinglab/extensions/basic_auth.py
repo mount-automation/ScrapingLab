@@ -8,7 +8,7 @@ from playwright.async_api import (
     BrowserContext,
 )
 
-class Extension3:
+class BasicAuth:
     def __init__(self, browser: Browser|None = None) -> None:
         self.logger: Logger = logging.getLogger(self.__class__.__name__)
         self.url: str = ('https://the-internet.herokuapp.com/basic_auth')

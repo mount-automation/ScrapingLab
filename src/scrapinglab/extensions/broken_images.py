@@ -10,7 +10,7 @@ from playwright.async_api import (
     APIResponse
 )
 
-class Extension4:
+class BrokenImages:
     def __init__(self, browser: Browser|None = None) -> None:
         self.url: str = ('https://the-internet.herokuapp.com/broken_images')
         self.logger: Logger = logging.getLogger(self.__class__.__name__)

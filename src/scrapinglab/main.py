@@ -8,10 +8,11 @@ from playwright.async_api import (
     Playwright,
 )
 from scrapinglab import (
-    Extension1,
-    Extension2,
-    Extension3,
-    Extension4,
+    SplitTesting,
+    AddRemoveElements,
+    BasicAuth,
+    BrokenImages,
+    ChallengingDOM,
 )
 
 logger: Logger = logging.getLogger(__name__)
@@ -30,10 +31,11 @@ async def main_init() -> None:
         await p.chromium.launch(headless=False) as browser,
     ):
         ext_list = [
-            # Extension1(browser=browser),
-            # Extension2(browser=browser),
-            # Extension3(browser=browser),
-            Extension4(browser=browser),
+            # SplitTesting(browser=browser),
+            # AddRemoveElements(browser=browser),
+            # BasicAuth(browser=browser),
+            BrokenImages(browser=browser),
+            # ChallengingDOM(browser=browser),
         ]
         try:
             tg: TaskGroup

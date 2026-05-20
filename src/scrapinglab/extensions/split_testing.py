@@ -7,7 +7,7 @@ from playwright.async_api import (
     Page, 
     Locator,
 )
-class Extension1:
+class SplitTesting:
     def __init__(self, browser: Browser|None = None) -> None:
         self.logger: Logger = logging.getLogger(self.__class__.__name__)
         self.browser: Browser = browser

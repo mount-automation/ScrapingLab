@@ -1,7 +1,14 @@
-from scrapinglab.extension_1 import Extension1
-from scrapinglab.extension_2 import Extension2
-from scrapinglab.extension_3 import Extension3
-from scrapinglab.extension_4 import Extension4
+from scrapinglab.extensions.split_testing import SplitTesting
+from scrapinglab.extensions.add_remove_elements import AddRemoveElements
+from scrapinglab.extensions.basic_auth import BasicAuth
+from scrapinglab.extensions.broken_images import BrokenImages
+from scrapinglab.extensions.challenging_dom import ChallengingDOM
 
-__all__: list[str] = ['Extension1', 'Extension2', 'Extension3', 'Extension4']
+__all__: list[str] = [
+    'SplitTesting',
+    'AddRemoveElements', 
+    'BasicAuth', 
+    'BrokenImages', 
+    'ChallengingDOM'
+]
 
