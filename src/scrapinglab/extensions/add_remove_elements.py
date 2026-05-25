@@ -1,31 +1,22 @@
-import logging
-from logging import Logger
 import asyncio
 from playwright.async_api import (
     Browser,
-    BrowserContext,
     Page,
     Locator,
 )
+from .base_extension import BaseExtension
 
-class AddRemoveElements:
-    def __init__(self, browser: Browser|None = None) -> None:
-        self.logger: Logger = logging.getLogger(self.__class__.__name__)
-        self.browser: Browser = browser
-        self.url: str = (
-            'https://the-internet.herokuapp.com/add_remove_elements/'
-        )
-        self._amnt_elements: int = 0
+class AddRemoveElements(BaseExtension):
+    url = 'https://the-internet.herokuapp.com/add_remove_elements/'
+
+    def __init__(self, browser: Browser) -> None:
+        super().__init__(browser=browser)
+        self._amnt_elements = 0
     
-    async def init_extension(self) -> None:
-        context: BrowserContext
-        self.page: Page
-        async with (
-            await self.browser.new_context() as context,
-            await context.new_page() as self.page,
-        ):
-            await self.page.goto(self.url)
-            await self._entry_point()
+    async def run(self, page: Page) -> None:
+        self.page = page
+        await self.page.goto(self.url)
+        await self._entry_point()
 
     async def _entry_point(self) -> None:
         try:

@@ -4,12 +4,17 @@ from .basic_auth import BasicAuth
 from .broken_images import BrokenImages
 from .challenging_dom import ChallengingDOM
 from .checkboxes import CheckBoxes
+from .context_menu import ContextMenu
+from .digest_auth import DigestAuth
+from .base_extension import BaseExtension
 
-__all__ = [
-    'SplitTesting',
-    'AddRemoveElements',
-    'BasicAuth',
-    'BrokenImages',
-    'ChallengingDOM',
-    'CheckBoxes',
+ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
+    SplitTesting,
+    AddRemoveElements,
+    BasicAuth,
+    BrokenImages,
+    ChallengingDOM,
+    CheckBoxes,
+    ContextMenu,
+    DigestAuth,
 ]
