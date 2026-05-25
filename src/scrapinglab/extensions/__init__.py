@@ -1,3 +1,4 @@
+from .base_extension import BaseExtension
 from .split_testing import SplitTesting
 from .add_remove_elements import AddRemoveElements
 from .basic_auth import BasicAuth
@@ -6,15 +7,16 @@ from .challenging_dom import ChallengingDOM
 from .checkboxes import CheckBoxes
 from .context_menu import ContextMenu
 from .digest_auth import DigestAuth
-from .base_extension import BaseExtension
+from .disappearing_elements import DisappearingElements
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
-    SplitTesting,
-    AddRemoveElements,
-    BasicAuth,
-    BrokenImages,
-    ChallengingDOM,
-    CheckBoxes,
-    ContextMenu,
-    DigestAuth,
+    # SplitTesting,
+    # AddRemoveElements,
+    # BasicAuth,
+    # BrokenImages,
+    # ChallengingDOM,
+    # CheckBoxes,
+    # ContextMenu,
+    # DigestAuth,
+    DisappearingElements,
 ]
