@@ -9,6 +9,7 @@ from .context_menu import ContextMenu
 from .digest_auth import DigestAuth
 from .disappearing_elements import DisappearingElements
 from .drag_and_drop import DragAndDrop
+from .dropdown import Dropdown
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -20,5 +21,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # ContextMenu,
     # DigestAuth,
     # DisappearingElements,
-    DragAndDrop,
+    # DragAndDrop,
+    Dropdown,
 ]
