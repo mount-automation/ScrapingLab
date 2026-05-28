@@ -14,6 +14,7 @@ from .dynamic_content import DynamicContent
 from .dynamic_controls import DynamicControls
 from .dynamic_loading import DynamicLoading
 from .entry_ad import EntryAd
+from .exit_intent import ExitIntent
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -30,5 +31,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # DynamicContent,
     # DynamicControls,
     # DynamicLoading,
-    EntryAd,
+    # EntryAd,
+    ExitIntent,
 ]
