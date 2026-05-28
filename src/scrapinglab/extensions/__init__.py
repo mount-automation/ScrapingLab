@@ -15,6 +15,7 @@ from .dynamic_controls import DynamicControls
 from .dynamic_loading import DynamicLoading
 from .entry_ad import EntryAd
 from .exit_intent import ExitIntent
+from .file_downloader import FileDownloader
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -32,5 +33,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # DynamicControls,
     # DynamicLoading,
     # EntryAd,
-    ExitIntent,
+    # ExitIntent,
+    FileDownloader,
 ]
