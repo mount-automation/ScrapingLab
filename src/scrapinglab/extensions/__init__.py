@@ -16,6 +16,7 @@ from .dynamic_loading import DynamicLoading
 from .entry_ad import EntryAd
 from .exit_intent import ExitIntent
 from .file_downloader import FileDownloader
+from .file_uploader import FileUploader
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -34,5 +35,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # DynamicLoading,
     # EntryAd,
     # ExitIntent,
-    FileDownloader,
+    # FileDownloader,
+    FileUploader,
 ]
