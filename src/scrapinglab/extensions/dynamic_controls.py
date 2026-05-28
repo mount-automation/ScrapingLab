@@ -30,12 +30,11 @@ class DynamicControls(BaseExtension):
             self.logger.warning('Textbox is already disabled!')
             raise ValueError('Textbox is already disabled!')
 
-
     async def _enable_textbox(self, page: Page) -> None:
         button: Locator = page.get_by_role('button', name='Enable')
         textbox: Locator = page.get_by_role('textbox')
         # The disabled attribute does not actually have a value but
-        # by default, get_attribute() returns a empty string if the 
+        # by default, get_attribute() returns an empty string if the 
         # attribute does exist. 
         disabled: str|None = await textbox.get_attribute('disabled')
         if isinstance(disabled, str):
