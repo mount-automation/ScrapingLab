@@ -4,7 +4,6 @@ from playwright.async_api import (
     Locator,
     FileChooser,
 )
-import asyncio
 
 class FileUploader(BaseExtension):
     url = 'https://the-internet.herokuapp.com/upload'
