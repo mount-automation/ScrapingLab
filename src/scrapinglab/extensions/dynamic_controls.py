@@ -1,9 +1,6 @@
-import asyncio
 from .core import BaseExtension
-from typing import Literal
 from playwright.async_api import (
     Page,
-    Browser,
     Locator,
 )
 
