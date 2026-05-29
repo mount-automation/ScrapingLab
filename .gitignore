@@ -1,5 +1,32 @@
-.venv
-.vscode
-**/__pycache__/
-**/*egg-info/
-.misc
+# --- Python / Build ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.python-version
+*.egg-info/
+build/
+dist/
+
+# --- Environments ---
+.venv/
+env/
+venv/
+
+# --- Scraping Specifics ---
+# Keep your credentials out of GitHub
+.env
+auth.json
+
+# Don't track downloaded artifacts or logs
+*.log
+downloads/
+temp_output/
+*.html
+*.json
+!pyproject.toml   # Ensure these specific JSON/TOML files stay tracked
+!uv.lock
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
