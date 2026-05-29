@@ -17,6 +17,7 @@ from .entry_ad import EntryAd
 from .exit_intent import ExitIntent
 from .file_downloader import FileDownloader
 from .file_uploader import FileUploader
+from .floating_menu import FloatingMenu
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -36,5 +37,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # EntryAd,
     # ExitIntent,
     # FileDownloader,
-    FileUploader,
+    # FileUploader,
+    FloatingMenu,
 ]
