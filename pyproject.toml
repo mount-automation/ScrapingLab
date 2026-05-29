@@ -5,6 +5,7 @@ description = "Lab for learning web scraping with python"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "humancursor>=1.1.5",
     "oxymouse>=1.1.0",
     "playwright>=1.59.0",
     "pydantic>=2.13.4",
@@ -17,7 +18,7 @@ start-scrape = "scrapinglab.main:main"
 package = true
 
 [tool.uv.sources]
-toolbox = { path = "../ToolBox" }
+toolbox = { git = "https://github.com/Mount2003/ToolBox.git" }
 
 [dependency-groups]
 dev = [
