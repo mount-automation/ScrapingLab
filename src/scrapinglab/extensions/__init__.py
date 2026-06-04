@@ -18,6 +18,7 @@ from .exit_intent import ExitIntent
 from .file_downloader import FileDownloader
 from .file_uploader import FileUploader
 from .floating_menu import FloatingMenu
+from .forgot_password import ForgotPassword
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -38,5 +39,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # ExitIntent,
     # FileDownloader,
     # FileUploader,
-    FloatingMenu,
+    # FloatingMenu,
+    ForgotPassword,
 ]
