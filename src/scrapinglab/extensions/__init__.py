@@ -20,7 +20,7 @@ from .file_uploader import FileUploader
 from .floating_menu import FloatingMenu
 from .forgot_password import ForgotPassword
 from .login_page import LoginPage
-from .frames import FrameHandler
+from .frame import FrameHandler
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,

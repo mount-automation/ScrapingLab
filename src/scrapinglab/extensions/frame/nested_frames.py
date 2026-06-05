@@ -1,29 +1,29 @@
-from .core import BaseExtension
+import logging
+from logging import Logger
 from playwright.async_api import (
     Page,
     Locator,
     FrameLocator
 )
+from .base_frame import BaseFrame
 
-class FrameHandler(BaseExtension):
-    url = 'https://the-internet.herokuapp.com/frames'
+class NestedFrames(BaseFrame):
+    async def run_nested_frames(self) -> None:
+        await self.click_frame_link(name='Nested Frames')
+        main_frameset: Locator = self.page.locator('frameset')
+        await self._handle_top_frame(main_frameset=main_frameset)
+        await self._handle_bottom_frame(main_frameset=main_frameset)
 
-    async def run(self, page: Page) -> None:
-        await page.goto(self.url)
-        await self._nested_frames(page=page)
+    async def _handle_bottom_frame(self, main_frameset: Locator) -> None:
+        bottom_frame: FrameLocator = main_frameset.frame_locator(
+            f'frame[name="frame-bottom"]')
+        page: FrameLocator = bottom_frame
+        text: str = await page.locator('body').inner_text()
+        self._log_info(text=text)
 
-    async def _nested_frames(self, page: Page) -> None:
-        link: Locator = page.get_by_role('link', name='Nested Frames')
-        await link.click()
-        main_frameset: Locator = page.locator('frameset')
-        frame_pos = 'top'
-        await self._handle_base_frame(frame_pos=frame_pos, main_frameset=main_frameset)
-        frame_pos = 'bottom'
-        await self._handle_base_frame(frame_pos=frame_pos, main_frameset=main_frameset)
-
-    async def _handle_base_frame(self, frame_pos: str, main_frameset: Locator) -> None:
+    async def _handle_top_frame(self, main_frameset: Locator) -> None:
         top_frame: FrameLocator = main_frameset.frame_locator(
-            f'frame[name="frame-{frame_pos}"]')
+            f'frame[name="frame-top"]')
         frame_list: list[Locator] = await top_frame.locator(
             'frameset').locator('frame').all()
         for frame in frame_list:
@@ -48,13 +48,6 @@ class FrameHandler(BaseExtension):
         elif 'right' in frame_name:
             text: str = await page.locator('body').inner_text()
             self._log_info(text=text)
-        elif 'bottom' in frame_name:
-            text: str = await page.locator('body').inner_text()
-            self._log_info(text=text)
             
     def _log_info(self, text: str) -> None:
         self.logger.info(f'{text} frame detected. Message: "{text}"')
-
-
-
-        
