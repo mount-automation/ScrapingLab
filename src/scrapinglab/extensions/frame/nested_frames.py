@@ -1,7 +1,4 @@
-import logging
-from logging import Logger
 from playwright.async_api import (
-    Page,
     Locator,
     FrameLocator
 )
