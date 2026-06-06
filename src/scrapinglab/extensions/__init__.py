@@ -24,6 +24,7 @@ from .frame import FrameHandler
 from .geo_location import GeoLocation
 from .horizontal_slider import HorizontalSlider
 from .hovers import Hovers
+from .infinite_scrolling import InfiniteScrolling
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -50,5 +51,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # FrameHandler,
     # GeoLocation,
     # HorizontalSlider,
-    Hovers,
+    # Hovers,
+    InfiniteScrolling,
 ]
