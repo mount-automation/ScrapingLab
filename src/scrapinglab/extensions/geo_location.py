@@ -1,5 +1,4 @@
 from typing import Any
-
 from .core import BaseExtension
 from playwright.async_api import (
     Page,
