@@ -22,6 +22,7 @@ from .forgot_password import ForgotPassword
 from .login_page import LoginPage
 from .frame import FrameHandler
 from .geo_location import GeoLocation
+from .horizontal_slider import HorizontalSlider
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -46,5 +47,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # ForgotPassword,
     # LoginPage,
     # FrameHandler,
-    GeoLocation,
+    # GeoLocation,
+    HorizontalSlider,
 ]
