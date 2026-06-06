@@ -21,6 +21,7 @@ from .floating_menu import FloatingMenu
 from .forgot_password import ForgotPassword
 from .login_page import LoginPage
 from .frame import FrameHandler
+from .geo_location import GeoLocation
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -44,5 +45,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # FloatingMenu,
     # ForgotPassword,
     # LoginPage,
-    FrameHandler,
+    # FrameHandler,
+    GeoLocation,
 ]
