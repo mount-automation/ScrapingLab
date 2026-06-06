@@ -3,10 +3,12 @@ from logging import Logger
 from playwright.async_api import (
     Page,
     Locator,
-    FrameLocator
 )
 
 class BaseFrame:
+    page: Page
+    logger: Logger
+
     def __init__(self, page: Page, logger: Logger) -> None:
         self.page = page
         self.logger = logging.getLogger(
