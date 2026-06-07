@@ -18,7 +18,7 @@ start-scrape = "scrapinglab.main:main"
 package = true
 
 [tool.uv.sources]
-toolbox = { git = "https://github.com/MountCodes/ToolBox" }
+toolbox = { git = "https://github.com/mount-automation/ToolBox" }
 
 [dependency-groups]
 dev = [
