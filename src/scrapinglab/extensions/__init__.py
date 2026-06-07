@@ -27,6 +27,7 @@ from .hovers import Hovers
 from .infinite_scrolling import InfiniteScrolling
 from .inputs import Inputs
 from .jquery_module import JQueryUIMenu
+from .js_alerts import JSAlerts
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -56,5 +57,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # Hovers,
     # InfiniteScrolling,
     # Inputs,
-    JQueryUIMenu,
+    # JQueryUIMenu,
+    JSAlerts,
 ]
