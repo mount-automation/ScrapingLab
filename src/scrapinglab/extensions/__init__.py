@@ -26,6 +26,7 @@ from .horizontal_slider import HorizontalSlider
 from .hovers import Hovers
 from .infinite_scrolling import InfiniteScrolling
 from .inputs import Inputs
+from .jquery_module import JQueryUIMenu
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -54,5 +55,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # HorizontalSlider,
     # Hovers,
     # InfiniteScrolling,
-    Inputs,
+    # Inputs,
+    JQueryUIMenu,
 ]
