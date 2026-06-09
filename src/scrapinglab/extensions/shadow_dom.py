@@ -2,9 +2,7 @@ from .core import BaseExtension
 from playwright.async_api import (
     Page,
     Locator,
-    Download,
 )
-from pathlib import Path
 
 class ShadowDom(BaseExtension):
     url = 'https://the-internet.herokuapp.com/shadowdom'
