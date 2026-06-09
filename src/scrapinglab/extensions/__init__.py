@@ -34,6 +34,7 @@ from .large_deep_dom import LargeDeepDOM
 from .multiple_windows import MultipleWindows
 from .notifications import Notifications
 from .redirector import Redirector
+from .secure_file_download import SecureFileDownload
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -70,5 +71,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # LargeDeepDOM,
     # MultipleWindows,
     # Notifications,
-    Redirector,
+    # Redirector,
+    SecureFileDownload,
 ]
