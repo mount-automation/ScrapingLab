@@ -36,6 +36,7 @@ from .notifications import Notifications
 from .redirector import Redirector
 from .secure_file_download import SecureFileDownload
 from .shadow_dom import ShadowDom
+from .shifting_content import ShiftingContent
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -74,5 +75,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # Notifications,
     # Redirector,
     # SecureFileDownload,
-    ShadowDom,
+    # ShadowDom,
+    ShiftingContent,
 ]
