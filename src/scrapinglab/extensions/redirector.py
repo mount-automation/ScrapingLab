@@ -41,13 +41,3 @@ class Redirector(BaseExtension):
                 break
         chain.reverse()
         self.logger.info(f'Redirection chain: {" -> ".join(chain)}')
-
-
-
-
-
-
-
-
-
-            
