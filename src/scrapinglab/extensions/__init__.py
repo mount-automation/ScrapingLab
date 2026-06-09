@@ -33,6 +33,7 @@ from .key_presses import KeyPresses
 from .large_deep_dom import LargeDeepDOM
 from .multiple_windows import MultipleWindows
 from .notifications import Notifications
+from .redirector import Redirector
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -68,5 +69,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # KeyPresses,
     # LargeDeepDOM,
     # MultipleWindows,
-    Notifications,
+    # Notifications,
+    Redirector,
 ]
