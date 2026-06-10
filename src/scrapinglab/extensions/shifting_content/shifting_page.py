@@ -23,4 +23,5 @@ class ShiftingPage:
     async def init_page(self) -> Page:
         page: Page = self.link.page
         await self.link.click()
+        await page.wait_for_load_state('domcontentloaded')
         return page
