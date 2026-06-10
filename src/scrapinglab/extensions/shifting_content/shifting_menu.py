@@ -21,5 +21,5 @@ class ShiftingMenu(ShiftingPage):
         response: Response|None = await response_info.value
         if response:
             self.logger.info('Shifted portfolio link successfully clicked.')
-            await page.wait_for_load_state('domcontentloaded')
+            await page.wait_for_url('**/portfolio/')
             await page.goto(self.home_url)
