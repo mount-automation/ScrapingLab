@@ -41,6 +41,7 @@ from .slow_resources import SlowResources
 from .tables import Tables
 from .status_codes import StatusCodes
 from .typos import Typos
+from .tinymce import TinyMCE
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -84,5 +85,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SlowResources,
     # Tables,
     # StatusCodes,
-    Typos,
+    # Typos,
+    TinyMCE,
 ]
