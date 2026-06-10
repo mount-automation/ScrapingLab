@@ -37,6 +37,7 @@ from .redirector import Redirector
 from .secure_file_download import SecureFileDownload
 from .shadow_dom import ShadowDom
 from .shifting_content import ShiftingContent
+from .slow_resources import SlowResources
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -76,5 +77,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # Redirector,
     # SecureFileDownload,
     # ShadowDom,
-    ShiftingContent,
+    # ShiftingContent,
+    SlowResources,
 ]
