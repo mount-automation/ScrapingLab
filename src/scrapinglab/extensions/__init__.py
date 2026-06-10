@@ -39,6 +39,7 @@ from .shadow_dom import ShadowDom
 from .shifting_content import ShiftingContent
 from .slow_resources import SlowResources
 from .tables import Tables
+from .status_codes import StatusCodes
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -80,5 +81,6 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # ShadowDom,
     # ShiftingContent,
     # SlowResources,
-    Tables,
+    # Tables,
+    StatusCodes,
 ]
