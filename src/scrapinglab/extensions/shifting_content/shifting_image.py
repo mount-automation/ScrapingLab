@@ -32,7 +32,14 @@ class ShiftingImage(ShiftingPage):
                         self.logger.info(
                             'Image successfully captured '
                             'and its position shifted.')
+                        await page.goto(self.home_url)
+                        break
                     else:
-                        self.logger.info('Something went wrong during the image scale checking.')
+                        self.logger.info(
+                            'Something went wrong during' \
+                            ' the image scale checking.')
                         self.logger.info(f'{image_scale_before}')
                         self.logger.info(f'{image_scale_after}')
+                        raise ValueError(
+                            'Something went wrong during ' \
+                            'the image scale checking.')
