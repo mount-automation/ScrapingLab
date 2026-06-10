@@ -5,6 +5,7 @@ from playwright.async_api import (
 )
 from .shifting_menu import ShiftingMenu
 from .shifting_image import ShiftingImage
+from .shifting_record import ShiftingRecord
 
 class ShiftingContent(BaseExtension):
     url = 'https://the-internet.herokuapp.com/shifting_content'
@@ -22,3 +23,8 @@ class ShiftingContent(BaseExtension):
                 image: ShiftingImage = ShiftingImage(
                     home_url=self.url, link=link, logger=self.logger)
                 await image.proceed()
+            elif 'Example 3' in name:
+                record: ShiftingRecord = ShiftingRecord(
+                    home_url=self.url, link=link, logger=self.logger)
+                await record.proceed()
+                break
