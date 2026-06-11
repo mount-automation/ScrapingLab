@@ -86,5 +86,5 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # Tables,
     # StatusCodes,
     # Typos,
-    TinyMCE,
+    # TinyMCE,
 ]
