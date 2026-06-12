@@ -1,4 +1,5 @@
 import logging
+from asyncio import Semaphore
 from typing import ClassVar, Any
 from logging import Logger
 from abc import ABC, abstractmethod
@@ -11,9 +12,10 @@ from playwright.async_api import (
 class BaseExtension(ABC):
     url: ClassVar[str]
 
-    def __init__(self, browser: Browser) -> None:
+    def __init__(self, browser: Browser, semaphore: Semaphore) -> None:
         self.browser: Browser = browser
         self.logger: Logger = logging.getLogger(self.__class__.__name__)
+        self.semaphore: Semaphore = semaphore
 
     def get_context_options(self) -> dict[str, Any]:
         return {}
@@ -21,13 +23,14 @@ class BaseExtension(ABC):
     async def init_extension(self) -> None:
         page: Page
         context: BrowserContext
-        async with(
-            await self.browser.new_context(
-                **self.get_context_options()
-            ) as context,
-            await context.new_page() as page,
-        ):
-            await self.run(page=page)
+        async with self.semaphore:
+            async with(
+                await self.browser.new_context(
+                    **self.get_context_options()
+                ) as context,
+                await context.new_page() as page,
+            ):
+                await self.run(page=page)
 
     @abstractmethod
     async def run(self, page: Page) -> None:

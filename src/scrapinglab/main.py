@@ -1,7 +1,10 @@
 import logging
 import asyncio
 from logging import Logger
-from asyncio import TaskGroup
+from asyncio import (
+    TaskGroup,
+    Semaphore,
+)
 from playwright.async_api import (
     async_playwright, 
     Browser, 
@@ -24,9 +27,15 @@ async def main_init() -> None:
     ):
         try:
             tg: TaskGroup
-            async with asyncio.TaskGroup() as tg:
+            semaphore: Semaphore = asyncio.Semaphore(3)
+            if not semaphore:
+                raise ValueError(
+                    'Semaphore object could not be initialised')
+            async with (
+                asyncio.TaskGroup() as tg,    
+            ):
                 for Extension in ACTIVE_EXTENSIONS:
-                    ext = Extension(browser=browser)
+                    ext = Extension(browser=browser, semaphore=semaphore)
                     tg.create_task(ext.init_extension())
         except Exception:
             logger.exception('TaskGroup failed execution:')
