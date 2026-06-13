@@ -33,4 +33,10 @@ class SecureFileDownload(BaseExtension):
                 save_place: Path = save_place/download.suggested_filename
                 await download.save_as(save_place)
                 self.logger.info(f'Downloaded: {save_place}')
+                try:
+                    Path.unlink(save_place)
+                    self.logger.info(
+                        f'{save_place} successfully deleted.')
+                except FileNotFoundError:
+                    self.logger.info(f'{save_place} not found.')
                 break
