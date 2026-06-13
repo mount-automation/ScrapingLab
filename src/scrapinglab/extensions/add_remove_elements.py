@@ -1,4 +1,7 @@
 import asyncio
+from asyncio import (
+    Semaphore,
+)
 from playwright.async_api import (
     Browser,
     Page,
@@ -9,8 +12,8 @@ from .core.base_extension import BaseExtension
 class AddRemoveElements(BaseExtension):
     url = 'https://the-internet.herokuapp.com/add_remove_elements/'
 
-    def __init__(self, browser: Browser) -> None:
-        super().__init__(browser=browser)
+    def __init__(self, browser: Browser, semaphore: Semaphore) -> None:
+        super().__init__(browser=browser, semaphore=semaphore)
         self._amnt_elements = 0
     
     async def run(self, page: Page) -> None:
@@ -43,11 +46,8 @@ class AddRemoveElements(BaseExtension):
 
     async def _confirm_element_amount(self) -> int:
         while True:
-            user_input: str = await asyncio.to_thread(
-                input, 'Amount of elements to add: '
-            )
             try:
-                user_input = int(user_input)
+                user_input = 3
                 if user_input < 0:
                     self.logger.warning('Input must be >= 0')
                     continue
@@ -60,7 +60,7 @@ class AddRemoveElements(BaseExtension):
         return user_input
 
     async def _add_element(
-        self, page: Page|None = None, amount: int = 0
+        self, page: Page, amount: int = 0
     ) -> None:
         if amount > 0:
             self.logger.info(
@@ -74,7 +74,7 @@ class AddRemoveElements(BaseExtension):
             await asyncio.sleep(1)
 
     async def _delete_element(
-        self, page: Page|None = None, amount: int = 0
+        self, page: Page, amount: int = 0
     ) -> None:
         div_example: Locator = page.locator('div.example')
         div_elements: Locator = div_example.locator('div#elements')
