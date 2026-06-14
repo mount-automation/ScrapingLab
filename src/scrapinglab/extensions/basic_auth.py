@@ -1,37 +1,28 @@
-import logging
-from logging import Logger
+from typing import Any
 from playwright.async_api import (
     Page,
-    Browser,
-    BrowserContext,
-    HttpCredentials,
 )
+from .core import BaseExtension
 
-class BasicAuth:
-    def __init__(self, browser: Browser) -> None:
-        self.logger: Logger = logging.getLogger(self.__class__.__name__)
-        self.url: str = ('https://the-internet.herokuapp.com/basic_auth')
-        self.browser = browser
+class BasicAuth(BaseExtension):
+    url = 'https://the-internet.herokuapp.com/basic_auth'
+    creds = {
+            'http_credentials': {
+                'username': 'admin',
+                'password': 'admin',
+            },
+        } 
     
-    async def init_extension(self) -> None:
-        context: BrowserContext
-        page: Page
-        creds: HttpCredentials = {
-            'username': 'admin',
-            'password': 'admin',
-        }
+    def get_context_options(self) -> dict[str, Any]:
+        return self.creds
+
+    async def run(self, page: Page) -> None:
         self.logger.info(f'Attempting basic auth section: {self.url}')
-        async with (
-            await self.browser.new_context(
-                http_credentials=creds
-            ) as context,
-            await context.new_page() as page,
-        ):
-            await page.goto(self.url)
-            text = page.get_by_role('heading', name='Basic Auth')
-            await text.wait_for()
-            if await text.is_visible():
-                self.logger.info(
-                    f'Basic auth section passed with: '
-                    f'{creds}...'
-                )
+        await page.goto(self.url)
+        text = page.get_by_role('heading', name='Basic Auth')
+        await text.wait_for()
+        if await text.is_visible():
+            self.logger.info(
+                f'Basic auth section passed with: '
+                f'{self.creds}...'
+            )
