@@ -6,10 +6,11 @@ from playwright.async_api import (
     Page,
     Browser,
     BrowserContext,
+    HttpCredentials,
 )
 
 class BasicAuth:
-    def __init__(self, browser: Browser|None = None) -> None:
+    def __init__(self, browser: Browser) -> None:
         self.logger: Logger = logging.getLogger(self.__class__.__name__)
         self.url: str = ('https://the-internet.herokuapp.com/basic_auth')
         self.browser = browser
@@ -17,7 +18,7 @@ class BasicAuth:
     async def init_extension(self) -> None:
         context: BrowserContext
         page: Page
-        creds: dict[str, str] = {
+        creds: HttpCredentials = {
             'username': 'admin',
             'password': 'admin',
         }
