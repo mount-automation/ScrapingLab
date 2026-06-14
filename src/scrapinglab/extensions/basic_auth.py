@@ -1,6 +1,4 @@
-import asyncio
 import logging
-import json
 from logging import Logger
 from playwright.async_api import (
     Page,
