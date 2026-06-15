@@ -46,8 +46,8 @@ from .tinymce import TinyMCE
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
     # AddRemoveElements,
-    BasicAuth,
-    # BrokenImages,
+    # BasicAuth,
+    BrokenImages,
     # ChallengingDOM,
     # CheckBoxes,
     # ContextMenu,
