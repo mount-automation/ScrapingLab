@@ -1,33 +1,20 @@
-import asyncio
-import logging
-from logging import Logger
 from urllib.parse import urljoin
 from playwright.async_api import (
     Page,
-    Browser,
     Locator,
-    BrowserContext,
     APIResponse
 )
+from .core import BaseExtension
 
-class BrokenImages:
-    def __init__(self, browser: Browser|None = None) -> None:
-        self.url: str = ('https://the-internet.herokuapp.com/broken_images')
-        self.logger: Logger = logging.getLogger(self.__class__.__name__)
-        self.browser: Browser = browser
+class BrokenImages(BaseExtension):
+    url = 'https://the-internet.herokuapp.com/broken_images'
     
-    async def init_extension(self) -> None:
-        context: BrowserContext
-        page: Page
-        async with (
-            await self.browser.new_context() as context,
-            await context.new_page() as page,
-        ):
-            await page.goto(self.url)
-            await self._entry_point(page=page)
+    async def run(self, page: Page) -> None:
+        await page.goto(self.url)
+        await self._entry_point(page=page)
 
     async def _entry_point(
-        self, page: Page|None = None
+        self, page: Page
     ) -> None:
         result: tuple[bool, list] = await self._compare_result(
             await self._check_dimension(page=page),
@@ -41,7 +28,7 @@ class BrokenImages:
         else:
             self.logger.info(f'No broken images found...')
     
-    async def _check_dimension(self, page: Page|None = None) -> list[str]:
+    async def _check_dimension(self, page: Page) -> list[str]:
         images: Locator = page.get_by_role('img')
         broken_img_url: list[str] = await images.evaluate_all('''
             images => images
@@ -55,14 +42,16 @@ class BrokenImages:
         ''')
         return broken_img_url
     
-    async def _check_response(self, page: Page|None = None) -> list[str]:
+    async def _check_response(self, page: Page) -> list[str]:
         div: Locator = page.locator('div.example')
         div: Locator = div.filter(has=page.get_by_role('heading', level=3))
         img_list: list[Locator] = await div.get_by_role('img').all()
         broken_img_url: list[str] = []
         for img in img_list:
-            img_url: str = await img.get_attribute('src')
-            img_url = urljoin(page.url, img_url)
+            src_attribute: str|None = await img.get_attribute('src')
+            if not src_attribute:
+                raise ValueError('Failed to retrieve element attribute.')
+            img_url: str = urljoin(page.url, src_attribute)
             response: APIResponse = await page.request.get(img_url)
             status_code: int = response.status
             if status_code >= 400:
