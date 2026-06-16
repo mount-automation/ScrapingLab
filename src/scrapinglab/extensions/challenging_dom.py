@@ -2,34 +2,22 @@ import re
 import json
 from re import Match
 import asyncio
-import logging
-from logging import Logger
 from playwright.async_api import (
     Page,
-    Browser,
     Locator,
-    BrowserContext,
 )
+from .core import BaseExtension
 
 type TableData = list[dict[str, str]]
 
-class ChallengingDOM:
-    def __init__(self, browser: Browser|None = None) -> None:
-        self.browser: Browser = browser
-        self.logger: Logger = logging.getLogger(self.__class__.__name__)
-        self.url: str = 'https://the-internet.herokuapp.com/challenging_dom'
+class ChallengingDOM(BaseExtension):
+    url = 'https://the-internet.herokuapp.com/challenging_dom'
     
-    async def init_extension(self) -> None:
-        page: Page
-        context: BrowserContext
-        async with (
-            await self.browser.new_context() as context,
-            await context.new_page() as page,
-        ):
-            await page.goto(self.url)
-            await self._entry_point(page=page)
+    async def run(self, page: Page) -> None:
+        await page.goto(self.url)
+        await self._entry_point(page=page)
 
-    async def _entry_point(self, page: Page|None = None) -> None:
+    async def _entry_point(self, page: Page) -> None:
         status: bool = await self._click_buttons(page=page)
         if status:
             self.logger.info('First stage of the test done...')
@@ -40,7 +28,7 @@ class ChallengingDOM:
         if status:
             self.logger.info('Third stage of the test done...')
 
-    async def _press_edit_delete(self, page: Page|None = None) -> bool:
+    async def _press_edit_delete(self, page: Page) -> bool:
         element_name_list: list[str] = ['edit', 'delete']
         for name in element_name_list:
             self.logger.info(
@@ -51,7 +39,7 @@ class ChallengingDOM:
             await link.click() 
         return True
 
-    async def _parse_table(self, page: Page|None = None) -> bool:
+    async def _parse_table(self, page: Page) -> bool:
         table: Locator = page.locator('table')
         column_header_list: list[str] = await self._parse_column_headers(
             page=page, table=table
@@ -69,20 +57,22 @@ class ChallengingDOM:
         return False
 
     async def _parse_column_headers(
-        self, page: Page|None = None,
-        table: Locator|None = None,
+        self,
+        page: Page,
+        table: Locator,
     ) -> list[str]:
         column_header_list: list[Locator] = await table.get_by_role(
             'columnheader').filter(has_not_text='Action').all()
-        column_header_list: list[str] = [await column_header.inner_text() 
-            for column_header in column_header_list
-        ]
-        return column_header_list
+        column_header_str_list: list[str] = []
+        for column_header in column_header_list:
+            text: str = await column_header.inner_text()
+            column_header_str_list.append(text)
+        return column_header_str_list
 
     async def _parse_table_row(
         self,
-        page: Page|None = None,
-        tbody: Locator|None = None,
+        page: Page,
+        tbody: Locator,
         column_headers: list[str] = [''],
     ) -> TableData:
         tr_list: list[Locator] = await tbody.locator('tr').all()
@@ -97,7 +87,7 @@ class ChallengingDOM:
             table_data_list.append(row_data_dict)
         return table_data_list
 
-    async def _click_buttons(self, page: Page|None = None) -> bool:
+    async def _click_buttons(self, page: Page) -> bool:
         div: Locator = page.locator('div.large-2.columns')
         buttons: list[Locator] = await div.get_by_role('link').all()
         if buttons:
@@ -114,7 +104,7 @@ class ChallengingDOM:
             )
         return True
             
-    async def _extract_script_info(self, page: Page|None = None) -> str:
+    async def _extract_script_info(self, page: Page) -> str:
         div = page.locator('div#content')
         script = div.locator('script')
         # Another way of doing this:
@@ -122,7 +112,9 @@ class ChallengingDOM:
         #     script => script.text 
         # ''')
         script_code: str = await script.inner_html()
-        found: Match[str] = re.search(r'Answer: ([0-9]+)', script_code)
+        found: Match[str]|None = re.search(r'Answer: ([0-9]+)', script_code)
+        if not found:
+            raise ValueError('Could not extract string via regex.')
         canvas_num: str = found.group(1)
         return canvas_num
     
