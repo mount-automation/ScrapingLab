@@ -21,6 +21,7 @@ toolbox = { git = "https://github.com/mount-automation/ToolBox" }
 
 [dependency-groups]
 dev = [
+    "pytest>=9.1.0",
     "toolbox",
 ]
 
