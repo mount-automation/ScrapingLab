@@ -22,5 +22,5 @@ def test_package_has_init_file():
                 f'{module_info.name}')
             package_path = Path(module_spec.origin)
             assert '__init__' in module_spec.origin, (
-                f'The following package has no __init__.py file:'
-                f' {package_path.stem}')
+                f'The following package has no __init__.py file: '
+                f'{package_path.stem}')
