@@ -58,7 +58,6 @@ class ChallengingDOM(BaseExtension):
 
     async def _parse_column_headers(
         self,
-        page: Page,
         table: Locator,
     ) -> list[str]:
         column_header_list: list[Locator] = await table.get_by_role(
