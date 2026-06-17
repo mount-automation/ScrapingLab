@@ -18,7 +18,7 @@ def test_package_has_init_file():
             assert module_spec.origin, (
                 f'Module specification path could not be retrieved. '
                 f'This might due to this package not having an '
-                f'__init__.py file. Package in question is '
+                f'__init__.py file. Package in question is: '
                 f'{module_info.name}')
             package_path = Path(module_spec.origin)
             assert '__init__' in module_spec.origin, (
