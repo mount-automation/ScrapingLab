@@ -42,8 +42,7 @@ class ChallengingDOM(BaseExtension):
     async def _parse_table(self, page: Page) -> bool:
         table: Locator = page.locator('table')
         column_header_list: list[str] = await self._parse_column_headers(
-            page=page, table=table
-        )
+            table=table)
         tbody: Locator = table.locator('tbody')
         table_data_list: TableData = await self._parse_table_row(
             page=page,
