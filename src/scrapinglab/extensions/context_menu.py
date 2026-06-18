@@ -1,30 +1,18 @@
-import logging
 import asyncio
-from logging import Logger
 from playwright.async_api import (
     Page,
     Dialog,
-    Browser,
     Locator,
-    BrowserContext,
 )
+from .core import BaseExtension
 
-class ContextMenu:
-    def __init__(self, browser: Browser|None = None) -> None:
-        self.browser: Browser = browser
-        self.logger: Logger = logging.getLogger(self.__class__.__name__)
-        self.url: str = 'https://the-internet.herokuapp.com/context_menu'
-    
-    async def init_extension(self) -> None:
-        page: Page
-        context: BrowserContext
-        async with (
-            await self.browser.new_context() as context,
-            await context.new_page() as page,
-        ):
-            await page.goto(self.url)
-            if await self.activate_context_menu(page=page):
-                self.logger.info('ContextMenu module done...')
+class ContextMenu(BaseExtension):
+    url = 'https://the-internet.herokuapp.com/context_menu'
+
+    async def run(self, page: Page) -> None:
+        await page.goto(self.url)
+        if await self.activate_context_menu(page=page):
+            self.logger.info('ContextMenu module done...')
 
     async def dialog_handler(self, dialog: Dialog) -> None:
         self.logger.info(
@@ -35,7 +23,7 @@ class ContextMenu:
         self.logger.info('Accepting alert popup...')
         await dialog.accept()
 
-    async def activate_context_menu(self, page: Page|None = None) -> bool:
+    async def activate_context_menu(self, page: Page) -> bool:
         page.once('dialog', self.dialog_handler)
         hotspot: Locator = page.locator("#hot-spot")
         await hotspot.click(button='right')
