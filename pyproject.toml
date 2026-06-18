@@ -23,6 +23,7 @@ toolbox = { git = "https://github.com/mount-automation/ToolBox" }
 dev = [
     "pytest>=9.1.0",
     "toolbox",
+    "validators>=0.35.0",
 ]
 
 [build-system]
