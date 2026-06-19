@@ -42,6 +42,7 @@ from .tables import Tables
 from .status_codes import StatusCodes
 from .typos import Typos
 from .tinymce import TinyMCE
+from .hudson_rock import FortiBleedScraper
 
 ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # SplitTesting,
@@ -50,7 +51,7 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # BrokenImages,
     # ChallengingDOM,
     # CheckBoxes,
-    ContextMenu,
+    # ContextMenu,
     # DigestAuth,
     # DisappearingElements,
     # DragAndDrop,
@@ -87,4 +88,5 @@ ACTIVE_EXTENSIONS: list[type[BaseExtension]] = [
     # StatusCodes,
     # Typos,
     # TinyMCE,
+    FortiBleedScraper,
 ]
