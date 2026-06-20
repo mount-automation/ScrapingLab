@@ -1,55 +1,31 @@
-import validators
-import pkgutil
-from pkgutil import (
-    ModuleInfo,
-)
-import inspect
+from .helper import (
+    asserter,
+    provider,)
 import pytest
+from pkgutil import ModuleInfo
+import inspect
 import importlib
-import importlib.util
-import scrapinglab.extensions as extensions
+import validators
 from pathlib import Path
-from conftest import assert_subpackage_have_init
+import scrapinglab.extensions as extensions
 from scrapinglab.extensions.core import BaseExtension
 from urllib.parse import urlparse
 
-def get_all_extensions():
-    assert len(extensions.__path__) == 1, (
-        'There are possibilities of namespace '
-        'package naming conflicts here.')
-    extensions_path = Path(extensions.__path__[0])
-    module_info_list = []
-    for module_info in pkgutil.iter_modules(
-        [extensions_path],
-        'scrapinglab.extensions.'):
-        module_info_list.append(module_info)
-    return module_info_list
-
-def get_formatted_ids():
-    module_info_list: list[ModuleInfo] = get_all_extensions()
-    formatted_ids = []
-    for module_info in module_info_list:
-        formatted_ids.append(module_info.name)
-    return formatted_ids
-
 @pytest.mark.parametrize(
     'module_info',
-    get_all_extensions(),
-    ids=get_formatted_ids(),)
+    provider.get_all_extensions(),
+    ids=provider.get_formatted_ids(),)
 class TestExtensions:
     def test_extensions_package_have_init_file(self, module_info):
-        assert_subpackage_have_init(module_info=module_info)
+        asserter.assert_subpackage_have_init(module_info=module_info)
 
     def test_extensions_have_url(self, module_info: ModuleInfo):
-        module = importlib.import_module(module_info.name)
-        classes = inspect.getmembers(module, inspect.isclass)
-        for _, cls in classes:
-            check = (
-                cls.__module__.startswith(module.__name__) 
-                and
-                cls is not BaseExtension
-            )
-            if check:
+        result = provider.get_extension_classes(module_info)
+        loaded_module, loaded_module_cls_list = result
+        for _, cls in loaded_module_cls_list:
+            result = provider.check_loaded_module_main_class(
+                cls=cls, loaded_module=loaded_module)
+            if result:
                 assert 'url' in cls.__dict__, (
                     f'Variable url not found in: {cls.__module__}')
                 assert validators.url(cls.__dict__['url']) is True, (
