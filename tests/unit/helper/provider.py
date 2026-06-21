@@ -6,6 +6,12 @@ from pathlib import Path
 import scrapinglab.extensions as extensions
 from scrapinglab.extensions import BaseExtension
 from types import ModuleType
+from dataclasses import dataclass
+
+@dataclass
+class LoadedExtensionMainClassCase:
+    module: ModuleType
+    cls: type
 
 def get_all_extensions():
     assert len(extensions.__path__) == 1, (
@@ -35,15 +41,18 @@ def get_extension_main_class():
             loaded_module, inspect.isclass)
         for _, cls in loaded_module_cls_list:
             if is_local_main_class(cls=cls, module=loaded_module):
-                extension_main_class_list.append((loaded_module, cls))
+                case = LoadedExtensionMainClassCase(
+                    module=loaded_module,
+                    cls=cls,)
+                extension_main_class_list.append(case)
     return extension_main_class_list
 
 def get_extension_class_ids():
-    module: ModuleType
-    cls: type
+    case: LoadedExtensionMainClassCase
     extension_class_ids = []
-    for module, cls in get_extension_main_class():
-        extension_class_ids.append(f'{module.__name__}.{cls.__name__}')
+    for case in get_extension_main_class():
+        extension_class_ids.append(
+            f'{case.module.__name__}.{case.cls.__name__}')
     return extension_class_ids
 
 def is_local_main_class(cls: type, module: ModuleType):
