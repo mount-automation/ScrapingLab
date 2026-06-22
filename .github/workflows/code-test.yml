@@ -1,0 +1,32 @@
+name: Project code testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Setup python
+        run: uv python install 3.14
+
+      - name: Install project dependencies
+        run: uv sync --dev
+
+      - name: Install playwright dependencies
+        run: uv run playwright install --with-deps
+
+      - name: Run tests
+        run: uv run python -m pytest -s -v
