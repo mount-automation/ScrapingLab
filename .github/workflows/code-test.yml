@@ -28,8 +28,5 @@ jobs:
       - name: Setup python
         run: uv python install 3.14
 
-      - name: Install project dependencies
-        run: uv sync --no-group dev
-
-      - name: Run tests
-        run: uv run python -m pytest -s -v
+      - name: Run tests while also install dependencies
+        run: uv run --no-group dev --group test python -m pytest -s -v
