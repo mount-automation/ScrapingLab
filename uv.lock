@@ -648,8 +648,10 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "pytest" },
     { name = "toolbox" },
+]
+test = [
+    { name = "pytest" },
     { name = "validators" },
 ]
 
@@ -661,9 +663,9 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [
+dev = [{ name = "toolbox", git = "https://github.com/mount-automation/ToolBox" }]
+test = [
     { name = "pytest", specifier = ">=9.1.0" },
-    { name = "toolbox", git = "https://github.com/mount-automation/ToolBox" },
     { name = "validators", specifier = ">=0.35.0" },
 ]
 
